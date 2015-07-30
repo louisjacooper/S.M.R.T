@@ -1,0 +1,202 @@
+#include <SoftwareSerial.h>
+
+
+#include "U8glib.h"
+
+
+U8GLIB_SSD1306_128X64 u8g(U8G_I2C_OPT_NO_ACK);	 
+ char PrintThis[50]="";
+void draw(void) {
+  // graphic commands to redraw the complete screen should be placed here  
+  u8g.setFont(u8g_font_unifont);
+  
+  u8g.setPrintPos(0, 15); 
+  // call procedure from base class, http://arduino.cc/en/Serial/Print
+  u8g.print(PrintThis);
+  u8g.setFont(u8g_font_fub20);
+  u8g.setPrintPos(35, 50);
+  u8g.print("11:43");
+}
+
+SoftwareSerial mySerial(2, 3); // RX, TX
+void setup() {  
+
+
+  mySerial.begin (9600);
+  Serial.begin(9600);
+  
+  // put your setup code here, to run once:
+
+}
+
+void loop() { 
+   
+
+  //mySerial.println("1");
+  mySerial.listen();
+  
+  while (mySerial.available() > 0) {
+    char inByte = mySerial.read();
+    switch (inByte){
+    case 1:
+      //display.print("sunny");
+       // picture loop
+       strcpy(PrintThis,"Sunny");
+      
+
+      break;
+     case 2:
+     strcpy(PrintThis,"cloudy");
+     //PrintThis = "Partially Cloudy";
+     
+      break;
+      case 3:
+      strcpy(PrintThis,"cloudy");
+      
+      
+      break;
+      case 5: 
+      strcpy(PrintThis,"misty");
+      
+      
+      break;
+      case 6:
+      strcpy(PrintThis,"foggy");
+      
+      
+       break;
+      case 7:
+      strcpy(PrintThis,"cloudy");
+      
+      
+       break;
+      case 8:
+      strcpy(PrintThis,"overcast");
+      
+      
+       break;
+      case 9:
+      strcpy(PrintThis,"showers");
+      
+      
+       break;
+      case 10:
+      strcpy(PrintThis,"showers");
+      
+      
+      
+       break;
+      case 11:
+      strcpy(PrintThis,"drizzle");
+      
+      
+       break;
+      case 12:
+      strcpy(PrintThis,"rain");
+      
+      
+       break;
+      case 13:
+      strcpy(PrintThis,"rain");
+      
+      
+       break;
+      case 14:
+      strcpy(PrintThis,"rain");
+      
+       break;
+      case 15:
+      strcpy(PrintThis,"rain");
+      
+       break;
+      case 16:
+      strcpy(PrintThis,"sleet");
+      
+      
+       break;
+      case 17:
+      strcpy(PrintThis,"sleet");
+      
+      
+       break;
+      case 18:
+      strcpy(PrintThis,"sleet");
+      
+      
+       break;
+      case 19:
+      strcpy(PrintThis,"hail");
+      
+      
+       break;
+      case 20:
+      strcpy(PrintThis,"hail");
+      
+      
+       break;
+      case 21:
+      strcpy(PrintThis,"hail");
+      
+      
+       break;
+      case 22:
+      strcpy(PrintThis,"snow");
+      
+      
+       break;
+      case 23:
+      strcpy(PrintThis,"snow");
+      
+      
+       break;
+      case 24:
+      strcpy(PrintThis,"snow");
+      
+      
+       break;
+      case 25:
+      strcpy(PrintThis,"snow");
+      
+      
+       break;
+      case 26:
+      strcpy(PrintThis,"snow");
+      
+      
+       break;
+      case 27:
+      strcpy(PrintThis,"snow");
+      
+      
+       break;
+      case 28:
+      strcpy(PrintThis,"thunder");
+      
+      
+       break;
+      case 29:
+      strcpy(PrintThis,"thunder");
+      
+      
+       break;
+      case 30:
+      strcpy(PrintThis,"thunder");
+      
+      
+     
+      
+    }; 
+    u8g.firstPage();  
+      do {
+        Serial.println(PrintThis);
+        Serial.println("Draw");
+        draw();
+        } while( u8g.nextPage() );
+  
+      // rebuild the picture after some delay
+      delay(500);
+
+  }
+  // put your main code here, to run repeatedly:
+
+}
